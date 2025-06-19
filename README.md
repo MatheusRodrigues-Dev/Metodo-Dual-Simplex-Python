@@ -54,24 +54,27 @@ pip install numpy
 
 ## Exemplo de Uso
 
-```python
-c = np.array([6, 10, 5])
-A = np.array([
-    [1, 2, 3],
-    [3, 0, 2]
-])
-b = np.array([24, 30])
-constraints = ['<=', '<=']
+Crie uma instância da classe passando:
+   - `c`: lista ou array com os coeficientes da função objetivo.
+   - `A`: matriz das restrições.
+   - `b`: lista ou array com o lado direito das restrições.
+   - `constraints`: lista com os tipos de restrição (`'>='`, `'<='`, `'='`).
+   - `problem_type`: `'max'` para maximização ou `'min'` para minimização.
 
-solution, optimal_value = solve_linear_program(c, A, b, constraints, problem_type='max')
-print("Solução ótima (Max):", solution)
-print("Valor ótimo da função objetivo (Max):", optimal_value)
+   ```python
+   c = [6, 4]
+   A = [
+       [9, 3],
+       [4, 8]
+   ]
+   b = [1500, 1600]
+   constraints = ['>=', '>=']
 
-constraints_min = ['>=', '>=']
-solution_min, optimal_value_min = solve_linear_program(c, A, b, constraints_min, problem_type='min')
-print("Solução ótima (Min):", solution_min)
-print("Valor ótimo da função objetivo (Min):", optimal_value_min)
-```
+   solver = SimplexSolver(c, A, b, constraints, problem_type='min')
+   solution, optimal_value = solver.solve()
+   print("Solução ótima:", solution)
+   print("Valor ótimo da função objetivo:", optimal_value)
+   ```
 
 ## Observações
 
@@ -86,7 +89,3 @@ print("Valor ótimo da função objetivo (Min):", optimal_value_min)
 ## Autor
 
 Matheus Rodrigues
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
