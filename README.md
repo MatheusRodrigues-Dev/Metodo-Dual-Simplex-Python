@@ -1,23 +1,25 @@
-# Método Dual Simplex — Implementação em Python
+# Método Simplex (Primal e Dual) — Implementação em Python
 
 ## Descrição
 
-Este projeto implementa o **método Dual Simplex** para resolução de problemas de Programação Linear (PL). O método é utilizado quando a solução inicial é **ótima mas infactível**, sendo uma alternativa ao método Primal Simplex tradicional.
+Este projeto implementa tanto o **método Primal Simplex** quanto o **método Dual Simplex** para resolução de problemas de Programação Linear (PL). O algoritmo decide automaticamente qual método aplicar com base na factibilidade inicial das restrições.
 
 ## Funcionalidades
 
-✔️ Resolve problemas de maximização ou minimização;
-✔️ Aceita funções objetivo e restrições arbitrárias;
-✔️ Manipula automaticamente restrições `<=`, `>=` e `=`;
-✔️ Adiciona variáveis de folga, excesso e artificiais (se necessário);
+✔️ Resolve problemas de **maximização** e **minimização**;
+✔️ Suporta restrições do tipo `<=`, `>=` e `=`;
+✔️ Adiciona variáveis de folga, excesso e artificiais automaticamente;
 ✔️ Executa pivoteamento Gauss-Jordan;
-✔️ Retorna solução ótima e valor da função objetivo.
+✔️ Retorna solução ótima e valor da função objetivo;
+✔️ Informa no console qual método foi aplicado: **Primal ou Dual Simplex**.
 
 ## O que o código espera como entrada?
 
-* **`c`** — Vetor de coeficientes da função objetivo (excluindo variáveis de folga/artificiais);
+* **`c`** — Vetor de coeficientes da função objetivo;
 * **`A`** — Matriz dos coeficientes das restrições;
-* **`b`** — Vetor dos termos independentes (lado direito das restrições).
+* **`b`** — Vetor dos termos independentes (lado direito das restrições);
+* **`constraints`** — Lista indicando o sinal de cada restrição: `['<=', '>=', '=']`;
+* **`problem_type`** — Tipo do problema: `'max'` ou `'min'`.
 
 ## Pré-requisitos
 
@@ -32,55 +34,54 @@ pip install numpy
 
 1. **Preparação do Problema:**
 
-   * As restrições são ajustadas para o formato padrão (`<=`);
-   * São adicionadas variáveis de folga conforme necessário.
+   * As restrições são ajustadas automaticamente para o formato adequado;
+   * As desigualdades `>=` são multiplicadas por -1;
+   * O problema de minimização é convertido para maximização, se necessário.
 
-2. **Construção da Tabela Simplex:**
+2. **Seleção do Método:**
 
-   * É montada a tabela (tableau) com variáveis básicas e função objetivo.
+   * Se o lado direito (`b`) já for factível (todos valores >= 0): usa **Primal Simplex**;
+   * Caso contrário: usa **Dual Simplex**;
+   * O método escolhido é exibido no console.
 
-3. **Iterações do Dual Simplex:**
+3. **Resolução:**
 
-   * Identifica a linha pivô com o menor valor negativo no lado direito;
-   * Seleciona a coluna pivô com o menor quociente `c_j/a_rj`;
-   * Executa o pivoteamento (eliminação de Gauss-Jordan);
-   * Repete até que não haja mais valores negativos no lado direito.
+   * Realiza pivoteamento de Gauss-Jordan iterativamente até encontrar a solução ótima.
 
 4. **Solução Final:**
 
-   * O algoritmo retorna a solução ótima encontrada e o valor da função objetivo.
+   * Retorna os valores das variáveis e o valor ótimo da função objetivo.
 
 ## Exemplo de Uso
 
 ```python
-import numpy as np
-from dual_simplex import dual_simplex
-
-# Coeficientes da função objetivo
-c = np.array([-3, -5])  # Exemplo: Max Z = 3x + 5y
-
-# Matriz de restrições
+c = np.array([6, 10, 5])
 A = np.array([
-    [1, 2],
-    [4, 0],
-    [0, 4]
+    [1, 2, 3],
+    [3, 0, 2]
 ])
+b = np.array([24, 30])
+constraints = ['<=', '<=']
 
-# Lado direito das restrições
-b = np.array([8, 16, 12])
+solution, optimal_value = solve_linear_program(c, A, b, constraints, problem_type='max')
+print("Solução ótima (Max):", solution)
+print("Valor ótimo da função objetivo (Max):", optimal_value)
 
-# Chamada do método
-solution, optimal_value = dual_simplex(c, A, b)
-
-print("Solução ótima:", solution)
-print("Valor ótimo da função objetivo:", optimal_value)
+constraints_min = ['>=', '>=']
+solution_min, optimal_value_min = solve_linear_program(c, A, b, constraints_min, problem_type='min')
+print("Solução ótima (Min):", solution_min)
+print("Valor ótimo da função objetivo (Min):", optimal_value_min)
 ```
+
+## Observações
+
+* Para problemas com mais de 2 variáveis não é possível gerar gráfico automático;
+* Para visualização gráfica de problemas com 2 variáveis, é possível estender este código.
 
 ## Referências
 
-* Pseudo-código baseado em literatura de Pesquisa Operacional;
-* Métodos de Programação Linear: Primal e Dual Simplex;
-* Introdução à Pesquisa Operacional – Taha.
+* Pesquisa Operacional — Taha;
+* Teoria e Implementação do Simplex Primal e Dual.
 
 ## Autor
 
