@@ -52,29 +52,6 @@ pip install numpy
 
    * Retorna os valores das variáveis e o valor ótimo da função objetivo.
 
-## Exemplo de Uso
-
-Crie uma instância da classe passando:
-   - `c`: lista ou array com os coeficientes da função objetivo.
-   - `A`: matriz das restrições.
-   - `b`: lista ou array com o lado direito das restrições.
-   - `constraints`: lista com os tipos de restrição (`'>='`, `'<='`, `'='`).
-   - `problem_type`: `'max'` para maximização ou `'min'` para minimização.
-
-   ```python
-   c = [6, 4]
-   A = [
-       [9, 3],
-       [4, 8]
-   ]
-   b = [1500, 1600]
-   constraints = ['>=', '>=']
-
-   solver = SimplexSolver(c, A, b, constraints, problem_type='min')
-   solution, optimal_value = solver.solve()
-   print("Solução ótima:", solution)
-   print("Valor ótimo da função objetivo:", optimal_value)
-   ```
 
 ## Observações
 

@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class SimplexSolver:
     """
     Classe para resolver problemas de Programação Linear usando os métodos Simplex Primal e Dual.
@@ -15,6 +16,10 @@ class SimplexSolver:
         :param constraints: Lista de strings com os tipos de restrição ('>=', '<=', '=')
         :param problem_type: 'max' para maximização, 'min' para minimização
         """
+        if len(constraints) != len(b):
+            raise ValueError(
+                f"O número de restrições em 'constraints' ({len(constraints)}) deve ser igual ao tamanho de 'b' ({len(b)})."
+            )
         self.c = np.array(c, dtype=float)
         self.A = np.array(A, dtype=float)
         self.b = np.array(b, dtype=float)
