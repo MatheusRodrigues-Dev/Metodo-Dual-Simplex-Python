@@ -26,10 +26,10 @@ class SimplexSolver:
         self.constraints = constraints
         self.problem_type = problem_type
 
-    def print_tableau(self, tableau, basic_vars, var_names):
-        """Imprime o tableau atual com variáveis básicas"""
+    def print_tableau(self, tableau, basic_vars, var_names, iteration):
+        """Imprime o tableau atual com variáveis básicas e número da iteração"""
+        print(f"\nTableau - Iteração {iteration}:")
         header = [" "] + var_names + ['LD']
-        print("\nTableau Atual:")
         print("\t".join([f"{h:>6}" for h in header]))
         for i, row in enumerate(tableau):
             var = 'Z' if i == 0 else basic_vars[i - 1]
@@ -49,9 +49,11 @@ class SimplexSolver:
             f"x{i+1}" for i in range(len(c))] + [f"s{i+1}" for i in range(len(b))]
         basic_vars = [f"s{i+1}" for i in range(len(b))]
 
-        self.print_tableau(tableau, basic_vars, var_names)
+        iteration = 0
+        self.print_tableau(tableau, basic_vars, var_names, iteration)
 
         while any(tableau[0, :-1] < 0):
+            iteration += 1
             pivot_col = np.argmin(tableau[0, :-1])
             if all(tableau[1:, pivot_col] <= 0):
                 raise Exception("Problema ilimitado!")
@@ -71,7 +73,7 @@ class SimplexSolver:
                     tableau[i, :] -= tableau[i, pivot_col] * \
                         tableau[pivot_row, :]
 
-            self.print_tableau(tableau, basic_vars, var_names)
+            self.print_tableau(tableau, basic_vars, var_names, iteration)
 
         solution = np.zeros(len(c))
         for i in range(len(c)):
@@ -81,7 +83,7 @@ class SimplexSolver:
                 solution[i] = tableau[one_row, -1]
 
         optimal_value = tableau[0, -1]
-        return solution, -optimal_value
+        return solution, optimal_value
 
     def dual_simplex(self, c, A, b):
         """
@@ -96,9 +98,11 @@ class SimplexSolver:
             f"x{i+1}" for i in range(len(c))] + [f"s{i+1}" for i in range(len(b))]
         basic_vars = [f"s{i+1}" for i in range(len(b))]
 
-        self.print_tableau(tableau, basic_vars, var_names)
+        iteration = 0
+        self.print_tableau(tableau, basic_vars, var_names, iteration)
 
         while any(tableau[1:, -1] < 0):
+            iteration += 1
             pivot_row = np.argmin(tableau[1:, -1]) + 1
             candidates = np.where(tableau[pivot_row, :-1] < 0)[0]
             if len(candidates) == 0:
@@ -114,7 +118,7 @@ class SimplexSolver:
                     tableau[i, :] -= tableau[i, pivot_col] * \
                         tableau[pivot_row, :]
 
-            self.print_tableau(tableau, basic_vars, var_names)
+            self.print_tableau(tableau, basic_vars, var_names, iteration)
 
         solution = np.zeros(len(c))
         for i in range(len(c)):
@@ -150,7 +154,7 @@ class SimplexSolver:
             print("Usando Dual Simplex")
             solution, optimal_value = self.dual_simplex(c, A_new, b_new)
 
-        if self.problem_type == 'min':
-            optimal_value = -optimal_value
+        # if self.problem_type == 'min':
+        #     optimal_value = -optimal_value
 
         return solution, optimal_value
