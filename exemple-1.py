@@ -18,9 +18,9 @@ Recursos disponíveis:
 
         
 Definindo os coeficientes da função objetivo:
-Exemplo: maximizar Lucro Z = 3x1 + 5x2
+Exemplo: maximizar Lucro Z = 530x1 + 320x2
 """
-c = [3, 5]
+c = [320, 530]
 
 """ Definindo a matriz de restrições (A) e o vetor do lado direito (b):
 Cada linha de A representa uma restrição.
@@ -69,7 +69,7 @@ Exemplo:
 Assim, temos:"""
 
 A = [[2, 1], [1, 3],]
-b = [3, 5]
+b = [320, 530]
 
 # Definindo o tipo de cada restrição:
 # Use '<=' para menor ou igual, '>=' para maior ou igual, '=' para igualdade
