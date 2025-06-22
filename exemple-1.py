@@ -1,12 +1,13 @@
 from SimplexSolver import SimplexSolver
 
-"""Exemplo primal mais dual
+"""
+Exemplo primal mais dual
 Situação:
 Uma fábrica produz 2 produtos: A e B.
 
 Lucro unitário:
-    Produto A: R$3 por unidade.
-    Produto B: R$5 por unidade.
+    Produto A: R$320 por unidade.
+    Produto B: R$530 por unidade.
 
 Recursos disponíveis:
     Máquina 1: 4 horas disponíveis.
@@ -22,7 +23,8 @@ Exemplo: maximizar Lucro Z = 530x1 + 320x2
 """
 c = [320, 530]
 
-""" Definindo a matriz de restrições (A) e o vetor do lado direito (b):
+"""
+Definindo a matriz de restrições (A) e o vetor do lado direito (b):
 Cada linha de A representa uma restrição.
 Exemplo:
 2x1 + 1x2 <= 4
@@ -48,8 +50,8 @@ try:
 except ValueError as e:
     print(e)  # Só imprime a mensagem personalizada
 
-
-"""Resolução pelo Dual Simplex
+"""
+Resolução pelo Dual Simplex
 Agora vamos inverter o problema (forma dual):
 
 Restrições se tornam variáveis:
@@ -61,7 +63,8 @@ Exemplo: maximizar Lucro Z = 4y1 + 6y2
 """
 c = [4, 6]
 
-""" Definindo a matriz de restrições (A) e o vetor do lado direito (b):
+"""
+Definindo a matriz de restrições (A) e o vetor do lado direito (b):
 Cada linha de A representa uma restrição.
 Exemplo:
 2y1 + 1y2 <= 3
@@ -86,4 +89,3 @@ try:
     print("Valor ótimo da função objetivo:", optimal_value)
 except ValueError as e:
     print(e)  # Só imprime a mensagem personalizada
-

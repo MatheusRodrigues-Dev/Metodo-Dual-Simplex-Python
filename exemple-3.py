@@ -1,32 +1,29 @@
 from SimplexSolver import SimplexSolver
 
-""" Exemplo baseado no artigo:
- https://medium.com/@minkyunglee_5476/linear-programming-the-dual-simplex-method-d3ab832afc50
+"""Resolução pelo Dual Simplex
 
+        
 Definindo os coeficientes da função objetivo:
-Exemplo: minimizar Z = 3x1 + 2x2
+Exemplo: minimixar Z = 5x1 + 2x2
 """
-c = [3, 2]
+c = [5, 2]
+
 """ Definindo a matriz de restrições (A) e o vetor do lado direito (b):
 Cada linha de A representa uma restrição.
 Exemplo:
-3x1 + 2x2 <= 60
-1x1 + 4x2 <= 20
-3x1 + 4x2 <= 50
-1x1 + 2x2 >= 10
+6x1 +2 x2 ≥ 66
+2x1 + 4x2 ≥ 36
+2x1 + 5x2 ≤ 40
 Assim, temos:"""
-A = [
-    [3, 2],
-    [1, 4],
-    [3, 4],
-    [1, 2]
-]
+
+A = [[6, 2], [2, 4], [2, 5]]
+b = [66, 36, 40]
 
 # Definindo o tipo de cada restrição:
 # Use '<=' para menor ou igual, '>=' para maior ou igual, '=' para igualdade
-constraints = ['<=', '<=', '<=', '>=']
+constraints = ['>=', '>=', '<=']
 
-b = [60, 20, 50, 10]
+print("\nExemplo dual\n")
 
 # Criando o resolvedor, informando se o problema é de minimização ('min') ou maximização ('max')
 try:
@@ -36,4 +33,4 @@ try:
     print("Valor ótimo da função objetivo:", optimal_value)
 except ValueError as e:
     print(e)  # Só imprime a mensagem personalizada
-    
+
