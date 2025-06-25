@@ -27,14 +27,22 @@ class SimplexSolver:
         self.problem_type = problem_type
 
     def print_tableau(self, tableau, basic_vars, var_names, iteration):
-        """Imprime o tableau atual com variáveis básicas e número da iteração"""
+        """Imprime o tableau atual com variáveis básicas e número da iteração, formatado"""
         print(f"\nTableau - Iteração {iteration}:")
-        header = [" "] + var_names + ['LD']
-        print("\t".join([f"{h:>6}" for h in header]))
+        # Cabeçalho alinhado
+        header = ["    "] + [f"{v:>8}" for v in var_names] + [f"{'LD':>8}"]
+        print("".join(header))
+        print("-" * (9 * (len(var_names) + 2)))  # Ajuste do separador
+
         for i, row in enumerate(tableau):
-            var = 'Z' if i == 0 else basic_vars[i - 1]
-            print(f"{var:>6}\t" + "\t".join([f"{v:6.2f}" for v in row]))
-            print("-" * 60)
+            if i == 0:
+                var = "  Z "
+            else:
+                var = f"{basic_vars[i-1]:>4}"
+            # Valores alinhados com 2 casas decimais e espaçamento
+            row_str = "".join([f"{v:9.2f}" for v in row])
+            print(f"{var}{row_str}")
+            print("-" * (9 * (len(var_names) + 2)))
 
     def primal_simplex(self, c, A, b):
         """
