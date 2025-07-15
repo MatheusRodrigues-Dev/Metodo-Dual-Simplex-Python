@@ -6,7 +6,7 @@ from SimplexSolver import SimplexSolver
 Definindo os coeficientes da função objetivo:
 Exemplo: minimizar Z = 3x1 + 2x2
 """
-c = [3, 2]
+c = [22, 18, 26, 30, 15, 20, 17, 19, 25, 24]
 """ Definindo a matriz de restrições (A) e o vetor do lado direito (b):
 Cada linha de A representa uma restrição.
 Exemplo:
@@ -16,17 +16,23 @@ Exemplo:
 1x1 + 2x2 >= 10
 Assim, temos:"""
 A = [
-    [3, 2],
-    [1, 4],
-    [3, 4],
-    [1, 2]
+    [2, 1, 3, 0, 5, 4, 0, 0, 2, 1],
+    [1, 3, 0, 2, 1, 0, 5, 4, 0, 0],
+    [0, 2, 1, 3, 4, 0, 0, 1, 2, 3],
+    [3, 0, 2, 1, 1, 3, 2, 0, 0, 1],
+    [4, 2, 0, 0, 3, 1, 1, 2, 2, 0],
+    [2, 3, 1, 0, 0, 1, 0, 3, 1, 2],
+    [1, 0, 0, 4, 2, 2, 1, 1, 3, 2],
+    [0, 1, 2, 2, 3, 0, 4, 0, 2, 1],
+    [3, 2, 1, 1, 1, 2, 0, 3, 1, 0],
+    [1, 0, 3, 2, 0, 4, 2, 2, 0, 3]
 ]
 
 # Definindo o tipo de cada restrição:
 # Use '<=' para menor ou igual, '>=' para maior ou igual, '=' para igualdade
-constraints = ['<=', '<=', '<=', '>=']
+constraints = ['>=', '>=', '>=', '>=', '>=', '>=', '>=', '>=', '>=', '>=']
 
-b = [60, 20, 50, 10]
+b = [120, 100, 90, 110, 130, 95, 105, 100, 125, 115]
 
 # Criando o resolvedor, informando se o problema é de minimização ('min') ou maximização ('max')
 try:
