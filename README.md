@@ -7,7 +7,6 @@ Este projeto implementa o **Método Simplex Primal e Dual** para resolução de 
 * ✅ Problema da **Mochila 0-1**
 * ✅ Problema do **Caixeiro-Viajante**
 * ✅ Problema de **Orçamento de Capital**
-* ✅ Problema de **Localização de Facilidades** (com capacidade e custo fixo)
 
 ---
 
